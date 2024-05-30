@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<string.h>
+#define N strlen(genpoly)
+char data[28];
+char checkval[28];
+char genpoly[28];
+int datalength,i,j;
+
+void xor(){
+    for(j=1;j<N;j++){
+        checkval[j]=((checkval[j]==genpoly[j])?'0':'1');
+    }
+}
+void crc(){
+    for( i=0;i<N;i++)
+    checkval[i]=data[i];
+    
+    do{
+    if(checkval[0]=='1')
+    xor();
+    for(j=0;j<N-1;j++)
+    checkval[j]=checkval[j+1];
+    
+    checkval[j]=data[i++];
+    }
+    while(i<=datalength+N-1);
+}
+void receiver(){
+    printf("enter the data  ");
+    scanf("%s",&data);
+       printf("Data received: %s\n", data);
+       
+       crc();
+       
+       for(i=0;(i<N-1) && (checkval[i]!='1');i++);
+           if(i<N-1)
+           printf("error occured\n");
+           else
+           printf("No error detected\n");
+       
+    
+}
+int main(){
+    printf("enter the data  ");
+    scanf("%s",&data);
+    
+    printf("enter the generating poly ");
+    scanf("%s",&genpoly);
+    
+    datalength=strlen(data);
+    
+    for(i=datalength;i<datalength+N-1;i++)
+    data[i]='0';
+    printf("data length padded with n-1 zeroes is %s\n",data);
+    
+    crc();
+     printf("check value is  %s\n",checkval);
+     
+     for(i=datalength;i<datalength+N-1;i++)
+    data[i]=checkval[i-datalength];
+    
+    printf("final data to send %s\n",data);
+    
+    receiver();
+    
+}

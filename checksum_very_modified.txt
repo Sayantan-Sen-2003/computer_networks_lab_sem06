@@ -1,0 +1,80 @@
+//check sum
+
+#include<stdio.h>
+#include<math.h>
+
+void binaryToDecimal(int sum,int n){
+    int arr[100],i=-1;
+    while(sum>0){
+        i++;
+        arr[i]=sum%2;
+        sum=sum/2;
+        
+        
+    }
+    for(int f=n-1;f>=0;f--)
+    printf("%d",arr[f]);
+    
+}
+int sender(int arr[],int n,int k){
+    int i,sum=0,checksum,xyz;
+    
+    printf("Sender side \n");
+    
+    for(int i=0;i<n;i++)
+    sum+=arr[i];
+    
+    printf("sum is: ");
+    binaryToDecimal(sum,k);
+     checksum=~sum;
+     if(checksum<0)  xyz=-1*checksum;
+     else xyz=checksum;
+     printf("\nchecksum is ");
+    binaryToDecimal(xyz,k);
+    
+    return checksum;
+}
+void receiver(int arr[],int n,int checksum,int k){
+    int i,sum=0,xyz;
+    
+    printf("Receiver side \n");
+    
+    for(int i=0;i<n;i++)
+    sum+=arr[i];
+    
+    printf("sum is: ");
+    binaryToDecimal(sum,k);
+    
+    sum=sum+checksum;
+    checksum=~sum;
+    if(checksum<0)  xyz=-1*checksum;
+     else xyz=checksum;
+     printf("\nchecksum is ");
+    binaryToDecimal(xyz,k);
+    
+    if(checksum==0)
+    printf("no error occured");
+    else
+    printf("error occured");
+}
+int main(){
+    int i,n,k;
+    printf("enter the no of bits\n");
+    scanf("%d",&n);
+    printf("enter the size of k bits\n");
+    scanf("%d",&k);
+    int arr[n];
+    printf("enter the data bits\n");
+    for(i=0;i<n;i++){
+        scanf("%d",&arr[i]);
+    }
+    int checksum= sender(arr,n,k);
+    
+    int arr2[n];
+    printf("enter the data bits on receiving side\n");
+    for(i=0;i<n;i++){
+        scanf("%d",&arr2[i]);
+    }
+    receiver(arr2,n,checksum,k);
+    
+}

@@ -1,0 +1,43 @@
+#include<string.h>
+#include<stdio.h>
+#include<stdlib.h>
+
+int countOne(char binary[]){
+    int count=0;
+    for(int i=0;i<strlen(binary);i++){
+        if(binary[i]=='1')
+        count++;
+    }
+    return count;
+}
+void addParity(char binary[]){
+    int counts= countOne(binary);
+    if(counts%2==0){
+        strcat(binary,"1");
+    }
+    else{
+        strcat(binary,"0");
+    }
+}
+void removeParity(char binary[]){
+    binary[strlen(binary)-1]='\0';
+}
+int main(){
+    char data[100],received[100];
+    printf("enter the sender data: ");
+    scanf("%s",&data);
+    addParity(data);
+    printf("data after adding parity %s\n",data);
+    
+    printf("enter the receiver data: ");
+    scanf("%s",&received);
+    
+    if(strcmp(data,received)==0){
+        printf("no error detected\n");
+        removeParity(data);
+        printf("data is %s", data);
+    }
+    else{
+        printf("error detected");
+    }
+}

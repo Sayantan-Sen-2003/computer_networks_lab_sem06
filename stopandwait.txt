@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+
+int receiver(int ack,int frameToSend){
+    if (ack == 1) {
+            printf("Receiver: Received frame %d\n", frameToSend);
+            return ++frameToSend;
+        }
+        return frameToSend;
+}
+int main() {
+    int totalFrames;
+    printf("Enter total frames to send: ");
+    scanf("%d", &totalFrames);
+
+    int frameToSend = 1;
+    int ack;
+
+    while (frameToSend <= totalFrames) {
+        printf("Sending frame %d\n", frameToSend);
+        printf("Enter acknowledgment for frame %d (1 for received): ", frameToSend);
+        scanf("%d", &ack);
+
+        frameToSend=receiver(ack,frameToSend);
+    }
+
+    return 0;
+}
