@@ -1,4 +1,4 @@
-//check sum
+//check sum-- has a binary converter , not working as intended.
 
 #include<stdio.h>
 #include<math.h>
